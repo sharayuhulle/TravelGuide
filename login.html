@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $("#loginForm").submit(function(e){
+            e.preventDefault(); // Prevent form submission
+            
+            var username = $("#username").val();
+            var password = $("#password").val();
+            
+            // Send AJAX request to check user existence
+            $.ajax({
+                url: 'login.php',
+                type: 'GET',
+                data: {username: username, password: password},
+                success: function(response) {
+                    if(response == "success") {
+                        // If user exists, redirect to main page
+                        window.location.href = 'main.php';
+                    } else {
+                        // If user does not exist, display message
+                        $("#message").html("Unknown user. Please Signup first. <a href='signup.html'>Login</a>");
+                    }
+                }
+            });
+        });
+    });
+    </script>
+        <style>
+            #main{
+             width: 400px;
+             height: 400px;
+             margin: 20px;
+             
+             padding: 16px;
+             background-color:whitesmoke;
+             border-radius: 10px;
+                 }
+                 label{
+                     text-align: left;
+                 }
+                 /* Full-width input fields */
+                 input[type=text], input[type=password] {
+                     width: 350px;
+                     padding: 15px;
+                     margin: 5px 0 22px 0;
+                     border: none;
+                     background: #f1f1f1;
+                 }
+     
+                 input[type=text]:focus, input[type=password]:focus {
+                     background-color: #ddd;
+                     outline: none;
+                 }
+     
+                 
+                 input[type=submit]{
+                     background-color: #04AA6D;
+                     color: white;
+                     padding: 16px 20px;
+                     border: none;
+                     cursor: pointer;
+                     width: 350px;
+                     opacity: 0.9;
+                 }
+     
+                 input[type=submit]:hover {
+                     opacity: 1;
+                 }
+         </style>
+</head>
+<body>
+    <center>
+    <div id="main">
+    <h2>Login</h2>
+    <form id="loginForm">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+    </div>
+    <div id="message"></div></center>
+</body>
+</html>
